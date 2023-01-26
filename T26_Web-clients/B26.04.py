@@ -12,6 +12,6 @@ info = response.info()
 # print(info)
 # print("Status:", response.status)
 # print("Encoding:", info.get_content_charset())
-right_time = print("Час на сайті:", info.__getitem__("Date"))
-cur_time = print("Час на комп'ютері:", datetime.today().strftime("%a, %d %b %Y %H:%M:%S %z"))
+right_time = print("Час на сайті:", info.__getitem__("Expires"))
+cur_time = print("Час на комп'ютері:", datetime.today().strftime("%a, %d %b %Y %H:%M:%S %Z"))
 
