@@ -1,17 +1,22 @@
-import time
-from http.client import HTTPResponse
+import requests
 from datetime import datetime, timedelta
-from urllib.request import urlopen, Request
-
+from bs4 import BeautifulSoup
 
 url = "https://time.is/Kyiv"
-request = Request(url, headers={"user-agent": "123"})
-response = urlopen(request)
-info = response.info()
-# help(info)
-# print(info)
-# print("Status:", response.status)
-# print("Encoding:", info.get_content_charset())
-right_time = print("Час на сайті:", info.__getitem__("Expires"))
-cur_time = print("Час на комп'ютері:", datetime.today().strftime("%a, %d %b %Y %H:%M:%S %Z"))
+
+response = requests.get(url, headers={"user-agent": "123"})
+soup = BeautifulSoup(response.text, 'lxml')
+
+time = soup.find("time", id="clock").text.split()
+# print(time)
+right_time = " ".join(time)
+
+# print(right_time)
+time_str = datetime.strptime(right_time, "%H:%M:%S")
+# print(time_str)
+
+print("Поточний час на сайті: ", right_time)
+
+cur_time = datetime.today().strftime("%H:%M:%S")
+print("Поточний час на комп'ютері: ", cur_time)
 
