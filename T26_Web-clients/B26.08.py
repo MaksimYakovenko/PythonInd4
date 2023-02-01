@@ -55,4 +55,4 @@ def main_function(city, file):
 
 if __name__ == '__main__':
     main_function("Kyiv", "output.xlsx")
-    print()
+    
