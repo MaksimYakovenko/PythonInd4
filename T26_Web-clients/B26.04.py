@@ -1,6 +1,5 @@
 from urllib.request import urlopen, Request
 import re
-from string import Template
 from datetime import datetime
 
 TIME = r'<time id="clock">(?P<TIME>.+)</time>'
