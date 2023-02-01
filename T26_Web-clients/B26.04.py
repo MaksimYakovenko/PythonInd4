@@ -1,22 +1,25 @@
-import requests
-from datetime import datetime, timedelta
-from bs4 import BeautifulSoup
+from urllib.request import urlopen, Request
+import re
+from string import Template
+from datetime import datetime
 
-url = "https://time.is/Kyiv"
+TIME = r'<time id="clock">(?P<TIME>.+)</time>'
 
-response = requests.get(url, headers={"user-agent": "123"})
-soup = BeautifulSoup(response.text, 'lxml')
+def find_time():
+    url = "https://time.is/"
+    city = "Kyiv"
+    main_url = url + city
+    request = Request(main_url, headers={"user-agent":"123"})
+    response = urlopen(request)
+    html = str(response.read(), encoding="utf-8", errors="ignore")
+    # print(html)
+    date = re.findall(TIME, html)
+    # print(date)
+    right_time = " ".join(date)
+    # print(date_str)
+    print("Поточний час на сайті: ", right_time)
+    cur_time = datetime.today().strftime("%H:%M:%S")
+    print("Поточний час на комп'ютері: ", cur_time)
 
-time = soup.find("time", id="clock").text.split()
-# print(time)
-right_time = " ".join(time)
-
-# print(right_time)
-time_str = datetime.strptime(right_time, "%H:%M:%S")
-# print(time_str)
-
-print("Поточний час на сайті: ", right_time)
-
-cur_time = datetime.today().strftime("%H:%M:%S")
-print("Поточний час на комп'ютері: ", cur_time)
-
+if __name__ == '__main__':
+    find_time()
