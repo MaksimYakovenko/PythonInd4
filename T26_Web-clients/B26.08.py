@@ -38,6 +38,4 @@ def main_function(city):
 
 if __name__ == '__main__':
     main_function("Kyiv")
-
-
-    
+   
