@@ -1,58 +1,43 @@
-from urllib.request import urlopen # Функція для отримання веб-сторінки з мережі
-import re # Імпортуємо бібліотеку для регулярних виразів
-import openpyxl # Імпортуємо бібліотеку для роботи з програмую Microsoft Excel
+from urllib.request import urlopen
+import re
 
-# Шаблон регулярного виразу, який знаходить дату
-DATE = r"<span>(?P<DATE_NAME>.+)</span>"
-# Шаблон регулярного виразу, який знаходить значення температури
-TEMP = r"<span>(?P<DEG>.+)&deg;</span>"
-# Шаблон регулярного виразу, який знаходить значення вологості
-HUMIDITY = r"<span>(?P<HUMIDITY_VALUE>.+)&%</span>" # Вологість
+HUMIDITY = r'<span title="Вологість">(.*?)</span>'
+TEMP = r'<span class="today-hourly-weather__temp">(.*?)</span>'
+DATE = r'<div class="day-in-history__date">(.*?)</div>'
 
-def find_date(html):
-    """Функція, яка знаходить та повертає значення сьогоднішньої дати"""
-    re_list = re.findall(DATE, html)
+def find_humidity(html):
+    re_list = re.findall(HUMIDITY, html, re.DOTALL)
     return re_list
 
 def find_temp(html):
-    """Функція, яка знаходить та повертає значення температури"""
-    re_list = re.findall(TEMP, html)
+    re_list = re.findall(TEMP, html, re.DOTALL)
     return re_list
 
-def find_humidity(html):
-    """Функція, яка знаходить та повертає значення вологості"""
-    re_list = re.findall(HUMIDITY, html)
+def find_date(html):
+    re_list = re.findall(DATE, html, re.DOTALL)
     return re_list
 
 def make_url(city):
-    """Функція, яка формує посилання для заданого міста"""
-    main_url = "https://www.meteoprog.com/ua/meteograms/"
-    # city = "Kyiv"
+    main_url = "https://www.meteoprog.com/ua/weather/"
     full_url = main_url + city
     return full_url
 
 def get_html(url):
-    """ Повертає розкодавані дані веб-сторінки за заданою адресою."""
     return str(urlopen(url).read(), encoding="utf-8", errors="ignore")
 
-def fix_html(html):
-    """ Весь код написано в один рядок (!) Шукаємо кінці рядків вигляду '...> '   """
-    html = "> \n".join(html.split("> "))
-    return html
-
-def main_function(city, file):
+def main_function(city):
     url = make_url(city)
     html = get_html(url)
-    html = fix_html(html)
 
-    date_list, temp_list, humidity_list = find_date(html), find_temp(html), find_humidity(html)
-    wb = openpyxl.Workbook()
-    ws = wb["Sheet"]
-    ws.append(["Дата", "Температура", "Вологість"])
-    for i in range(8):
-        ws.append([date_list[i - 1]])
-    wb.save("output.xlsx")
+    humidity_list, temp_list, date_list = find_humidity(html), find_temp(html), find_date(html)
+    # print(date_list)
+    # print(humidity_list)
+    # print(temp_list)
+    for i in range(1, 5):
+        print(humidity_list[i - 1] + "  " + temp_list[i - 1] + "  " + date_list[i - 3])
 
 if __name__ == '__main__':
-    main_function("Kyiv", "output.xlsx")
+    main_function("Kyiv")
+
+
     
