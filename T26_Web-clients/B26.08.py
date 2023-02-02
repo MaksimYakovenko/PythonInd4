@@ -37,5 +37,4 @@ def main_function(city):
         print(humidity_list[i - 1] + "  " + temp_list[i - 1] + "  " + date_list[i - 3])
 
 if __name__ == '__main__':
-    main_function("Kyiv")
-   
+    main_function("Kyiv")  
