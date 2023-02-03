@@ -1,13 +1,13 @@
-from urllib.request import urlopen, Request
+from urllib.request import urlopen, Request  # Функція для отримання веб-сторінки з мережі
 import re
 from datetime import datetime
 
 TIME = r'<time id="clock">(?P<TIME>.+)</time>'
 
-def find_time():
+def find_time(city):
     url = "https://time.is/"
-    city = "Kyiv"
     main_url = url + city
+    print(main_url)
     request = Request(main_url, headers={"user-agent":"123"})
     response = urlopen(request)
     html = str(response.read(), encoding="utf-8", errors="ignore")
@@ -16,9 +16,9 @@ def find_time():
     # print(date)
     right_time = " ".join(date)
     # print(date_str)
-    print("Поточний час на сайті: ", right_time)
+    print("Поточний час : ", right_time)
     cur_time = datetime.today().strftime("%H:%M:%S")
     print("Поточний час на комп'ютері: ", cur_time)
 
 if __name__ == '__main__':
-    find_time()
+    find_time("Kyiv")
