@@ -1,23 +1,37 @@
 import cgi
 from string import Template
 
-def calculate_dispersion(str1):
-    lst = [float(k) for k in str1.split(",")]
-    arith_mean = sum(lst) / len(lst) if len(lst) != 0 else 0
-    diff = [(v - arith_mean) for v in lst]
+def check_for_words(string):
+    lst_value = list(string.split(", "))
+    lst_str_value = [str(item) for item in lst_value]
+    for elem in lst_str_value:
+        if elem.isalpha():
+            s = elem.lower()
+            return s
+
+
+def calculate_dispersion(string):
+    lst_value = [float(k) for k in string.split(",")]
+    arith_mean = sum(lst_value) / len(lst_value) if len(lst_value) != 0 else 0
+    diff = [(v - arith_mean) for v in lst_value]
     mod_diff = [abs(d) if d < 0 else d for d in diff]
-    return mod_diff
+    mod_diff_str = ', '.join(map(str, mod_diff))
+    return mod_diff_str
 
 if __name__ == '__main__':
     form = cgi.FieldStorage()
-    string = form["string"].value
-    result = calculate_dispersion(string)
-    # answer = 'обчислена дисперсія' if calculate_dispersion(string) else \
-    #     'дисперсію неможливо обчислити'
-    #
-    # result = string + ' - ' + answer
-    with open("resultpage.html", encoding="utf-8") as f:
-        page = Template(f.read()).substitute(result=result)
+    string = form.getfirst("string", "")
+    if check_for_words(string):
+        answer = 'неможливо обчислити дисперсію'
+        result_1 = string + ' - ' + answer
+        with open("resultpage.html", encoding="utf-8") as f:
+            page = Template(f.read()).substitute(result=result_1)
+    else:
+        if calculate_dispersion(string):
+            answer = 'обчислена дисперсія'
+            result_2 = calculate_dispersion(string) + ' - ' + answer
+            with open("resultpage.html", encoding="utf-8") as f:
+                page = Template(f.read()).substitute(result=result_2)
 
     import os
     if os.name == "nt":
