@@ -4,10 +4,9 @@ from string import Template
 def check_for_words(string):
     s = ""
     for char in string:
-        if char.isalpha():
+        if char.isalpha() or char.isprintable():
             s += char.lower()
             return s
-
 
 def calculate_dispersion(string):
     lst_value = [float(k) for k in string.split(",")]
