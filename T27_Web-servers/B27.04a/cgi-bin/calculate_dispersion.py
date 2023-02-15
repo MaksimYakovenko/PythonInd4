@@ -2,11 +2,10 @@ import cgi
 from string import Template
 
 def check_for_words(string):
-    lst_value = list(string.split(", "))
-    lst_str_value = [str(item) for item in lst_value]
-    for elem in lst_str_value:
-        if elem.isalpha():
-            s = elem.lower()
+    s = ""
+    for char in string:
+        if char.isalpha():
+            s += char.lower()
             return s
 
 
