@@ -1,5 +1,4 @@
 import cgi
-import re
 from string import Template
 
 
