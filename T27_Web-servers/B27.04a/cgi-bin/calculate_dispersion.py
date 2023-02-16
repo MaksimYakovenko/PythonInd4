@@ -4,7 +4,7 @@ from string import Template
 def check_for_words(string):
     s = ""
     for char in string:
-        if char.isalpha() or char.isprintable():
+        if char.isalpha():
             s += char.lower()
             return s
 
