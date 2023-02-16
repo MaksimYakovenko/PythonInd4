@@ -2,11 +2,13 @@ import cgi
 import re
 from string import Template
 
-INCORRECT_DATA = r"[a-z]+"
 
 def incorrect_data(string):
-    s = re.findall(INCORRECT_DATA, string)
-    return s
+    s = ""
+    for char in string:
+        if char.isalpha():
+            s += char.lower()
+            return s
 
 def calculate_dispersion(string):
     lst_value = [float(k) for k in string.split(",")]
@@ -15,6 +17,7 @@ def calculate_dispersion(string):
     mod_diff = [abs(d) if d < 0 else d for d in diff]
     mod_diff_str = ', '.join(map(str, mod_diff))
     return mod_diff_str
+
 
 def application(environ, start_response):
     if environ.get("PATH_INFO", "").lstrip("/") == "":
@@ -33,9 +36,12 @@ def application(environ, start_response):
                 answer = "обчислена дисперсія"
                 result = "<h1>{} - {}</h1>".format(calculate_dispersion(
                     string), answer)
+
         start_response("200 OK", [("Content-type", "text/html; charset=utf-8"), ])
         with open("templates/dispersion.html", encoding="utf-8") as f:
             page = Template(f.read()).substitute(result=result)
+
+
     else:
         start_response("404 NOT FOUND", [("Content-type", "text/html; charset=utf-8"), ])
         with open("templates/error_404.html", encoding="utf-8") as f:
