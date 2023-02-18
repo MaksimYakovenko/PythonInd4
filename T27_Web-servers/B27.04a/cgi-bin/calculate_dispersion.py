@@ -1,12 +1,12 @@
 import cgi
+import re
 from string import Template
 
-def check_for_words(string):
-    s = ""
-    for char in string:
-        if char.isalpha():
-            s += char.lower()
-            return s
+INCORRECT_DATA = r"(?!,)[^0-9\s]+?"
+
+def incorrect_data(string):
+    s = re.findall(INCORRECT_DATA, string)
+    return s
 
 def calculate_dispersion(string):
     lst_value = [float(k) for k in string.split(",")]
@@ -19,7 +19,7 @@ def calculate_dispersion(string):
 if __name__ == '__main__':
     form = cgi.FieldStorage()
     string = form.getfirst("string", "")
-    if check_for_words(string):
+    if incorrect_data(string):
         answer = 'неможливо обчислити дисперсію'
         result_1 = string + ' - ' + answer
         with open("resultpage.html", encoding="utf-8") as f:
