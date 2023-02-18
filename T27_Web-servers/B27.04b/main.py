@@ -1,13 +1,12 @@
 import cgi
+import re
 from string import Template
 
+INCORRECT_DATA = r"(?!,)[^0-9\s]+?"
 
 def incorrect_data(string):
-    s = ""
-    for char in string:
-        if char.isalpha():
-            s += char.lower()
-            return s
+    s = re.findall(INCORRECT_DATA, string)
+    return s
 
 def calculate_dispersion(string):
     lst_value = [float(k) for k in string.split(",")]
@@ -47,6 +46,7 @@ def application(environ, start_response):
             page = f.read()
 
     return [bytes(page, encoding="utf-8")]
+
 
 HOST = ""
 PORT = 8000
