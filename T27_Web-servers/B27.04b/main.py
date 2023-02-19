@@ -2,7 +2,7 @@ import cgi
 import re
 from string import Template
 
-INCORRECT_DATA = r"(?!,)[^0-9\s]+?"
+INCORRECT_DATA = r"(?!,)[^0-9\s\.]+?"
 COMMA = r"[\,^A-Za-zА-ЯІЇЄа-яіїє]+?"
 
 def comma(string):
