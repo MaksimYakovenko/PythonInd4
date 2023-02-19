@@ -3,6 +3,11 @@ import re
 from string import Template
 
 INCORRECT_DATA = r"(?!,)[^0-9\s]+?"
+COMMA = r"[\,^A-Za-zА-ЯІЇЄа-яіїє]+?"
+
+def comma(string):
+    s = re.findall(COMMA, string)
+    return s
 
 def incorrect_data(string):
     s = re.findall(INCORRECT_DATA, string)
@@ -19,11 +24,15 @@ def calculate_dispersion(string):
 if __name__ == '__main__':
     form = cgi.FieldStorage()
     string = form.getfirst("string", "")
-    if incorrect_data(string):
-        answer = 'неможливо обчислити дисперсію'
-        result_1 = string + ' - ' + answer
-        with open("resultpage.html", encoding="utf-8") as f:
-            page = Template(f.read()).substitute(result=result_1)
+    if not comma(string):
+        with open("message_error.html", encoding="utf-8") as f:
+            page = f.read()
+
+    elif incorrect_data(string):
+            answer = 'неможливо обчислити дисперсію'
+            result_1 = string + ' - ' + answer
+            with open("resultpage.html", encoding="utf-8") as f:
+                page = Template(f.read()).substitute(result=result_1)
     else:
         if calculate_dispersion(string):
             answer = 'обчислена дисперсія'
