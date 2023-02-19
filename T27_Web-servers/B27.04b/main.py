@@ -3,6 +3,11 @@ import re
 from string import Template
 
 INCORRECT_DATA = r"(?!,)[^0-9\s]+?"
+COMMA = r"[\,^A-Za-zА-ЯІЇЄа-яіїє]+?"
+
+def comma(string):
+    s = re.findall(COMMA, string)
+    return s
 
 def incorrect_data(string):
     s = re.findall(INCORRECT_DATA, string)
@@ -21,15 +26,18 @@ def application(environ, start_response):
     if environ.get("PATH_INFO", "").lstrip("/") == "":
         form = cgi.FieldStorage(fp=environ["wsgi.input"], environ=environ)
         string = form.getfirst("string", "")
-        if incorrect_data(string):
-            answer = "обчислити дисперсію неможливо"
+        if string == "":
+            result = ""
+
+        elif not comma(string):
+            answer = "запишіть дані через кому"
             result = "<h1>{} - {}</h1>".format(string, answer)
 
-        elif string == "":
-            result = ""
-        
-        else:
+        elif incorrect_data(string):
+            answer = "неможливо обчислити дисперсію"
+            result = "<h1>{} - {}</h1>".format(string, answer)
 
+        else:
             if calculate_dispersion(string):
                 answer = "обчислена дисперсія"
                 result = "<h1>{} - {}</h1>".format(calculate_dispersion(
@@ -39,14 +47,12 @@ def application(environ, start_response):
         with open("templates/dispersion.html", encoding="utf-8") as f:
             page = Template(f.read()).substitute(result=result)
 
-
     else:
         start_response("404 NOT FOUND", [("Content-type", "text/html; charset=utf-8"), ])
         with open("templates/error_404.html", encoding="utf-8") as f:
             page = f.read()
 
     return [bytes(page, encoding="utf-8")]
-
 
 HOST = ""
 PORT = 8000
