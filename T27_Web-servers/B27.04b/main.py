@@ -3,7 +3,7 @@ import re
 from string import Template
 
 INCORRECT_DATA = r"(?!,)[^0-9\s\.]+?"
-COMMA = r"[\,^A-Za-zА-ЯІЇЄа-яіїє]+?"
+COMMA = r"[\,]+?"
 
 def comma(string):
     s = re.findall(COMMA, string)
