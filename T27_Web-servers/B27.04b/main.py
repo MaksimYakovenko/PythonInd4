@@ -4,6 +4,11 @@ from string import Template
 
 INCORRECT_DATA = r"(?!,)[^0-9\s\.]+?"
 COMMA = r"[\,]+?"
+FIRST_ELEMENT = r"(?<= )\d+"
+
+def first_element(string):
+    s = re.findall(FIRST_ELEMENT, string)
+    return s
 
 def comma(string):
     s = re.findall(COMMA, string)
@@ -28,13 +33,16 @@ def application(environ, start_response):
         string = form.getfirst("string", "")
         if string == "":
             result = ""
+        elif incorrect_data(string):
+            answer = "неможливо обчислити дисперсію"
+            result = "<h1>{} - {}</h1>".format(string, answer)
+
+        elif not first_element(string):
+            answer = 'обчислена дисперсія'
+            result = "<h1>{} - {}</h1>".format(calculate_dispersion(string), answer)
 
         elif not comma(string):
             answer = "запишіть дані через кому"
-            result = "<h1>{} - {}</h1>".format(string, answer)
-
-        elif incorrect_data(string):
-            answer = "неможливо обчислити дисперсію"
             result = "<h1>{} - {}</h1>".format(string, answer)
 
         else:
