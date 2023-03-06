@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta content="text/html" charset="utf-8">
+    <title>Маршрутний лист</title>
+  </head>
+  <body>
+  <h1>Додати маршрутний лист</h1>
+  <form method="POST" action="/route">
+    <p>
+      <input type="text" name="departure" size="23" placeholder="Введіть місто відправлення">
+      <input type="text" name="arrival" placeholder="Введіть місто прибуття">
+      <input type="number" name="distance" placeholder="Введіть відстань">
+      <input type="submit" value="Додати">
+    </p>
+  </form>
+  {route_info}
+  <p>
+    <i><a href="/">Повернутись на головну</a></i>
+  </p>
+  </body>
+</html>
