@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ticket>
+    <passenger>
+        <last_name>{last_name}</last_name>
+        <name>{name}</name>
+        <middle_name>{middle_name}</middle_name>
+    </passenger>
+    <route>
+        <departure>{departure}</departure>
+        <arrival>{arrival}</arrival>
+        <distance>{distance}</distance>
+    </route>
+    <price>{price}</price>
+</ticket>

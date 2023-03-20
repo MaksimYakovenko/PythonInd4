@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8">
+    <title>Розрахунок за проїзд</title>
+  </head>
+  <body>
+    <p>
+      <i><a href="/route">Додати маршрутний лист</a></i>
+    </p>
+    <p>
+      <i><a href="/passenger">Додати пасажира</a></i>
+    </p>
+    <h1>Розрахувати оплату за білет</h1>
+      <form method="POST" action="/result.xml">
+        <label for="route">Оберіть маршрут:</label>
+        <select id="route" name="route">
+          <option value="">Вибрати маршрут</option>
+          {routes}
+        </select>
+        <label for="passenger">Оберіть пасажира:</label>
+        <select id="passenger" name="passenger">
+          <option value="">Вибрати пасажира</option>
+          {passengers}
+        </select>
+        <input type="submit" value="Розрахувати">
+    </form>
+  </body>
+</html>
