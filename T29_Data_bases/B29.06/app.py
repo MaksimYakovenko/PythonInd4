@@ -83,8 +83,8 @@ def application(environ, start_response):
 
         delete_info = ''
         if passenger:
-            passenger_obj = DeletePassenger(p)
-            passenger_obj.delete_passenger(p)
+            passenger_obj = DeletePassenger(passenger)
+            passenger_obj.delete_passenger(passenger)
             delete_info = (
                 f'<h2>Пасажира з id {passenger} було видалено:</h2><pre>'
             )
@@ -174,3 +174,4 @@ if __name__ == '__main__':
     print(f'Локальний веб-сервер запущено на http://localhost:{PORT}')
     httpd = make_server(HOST, PORT, application)
     httpd.serve_forever()
+
