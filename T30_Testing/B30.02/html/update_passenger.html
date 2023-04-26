@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Редагування пасажира</title>
+</head>
+<body>
+<form method="POST" action="/update_passenger">
+    <label for="passenger">Вибрати ID пасажира:</label>
+    <select id="passenger" name="passenger">
+        <option value="">Вибрати ID пасажира</option>
+        {passengers}
+    </select>
+    <h2>Поля для оновлення:</h2>
+    <label for="passenger">ПІБ:</label>
+    <input type="text" name="last_name" placeholder="Введіть прізвище">
+    <input type="text" name="name" placeholder="Введіть ім'я">
+    <input type="text" name="middle_name" placeholder="Введіть по батькові">
+    <input type="submit" value="Оновити">
+</form>
+{passenger_info}
+<br>
+<p>
+    <i><a href="/">Повернутись на головну</a></i>
+</p>
+</body>
+</html>

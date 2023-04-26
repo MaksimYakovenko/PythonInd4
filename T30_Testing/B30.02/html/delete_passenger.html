@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Видалення пасажира</title>
+</head>
+<body>
+<h1>Видалення пасажира</h1>
+<form method="POST" action="/delete_passenger">
+    <label for="passenger">Видалити пасажира:</label>
+    <select id="passenger" name="passenger">
+        <option value="">Вибрати пасажира</option>
+        {passengers}
+    </select>
+    <input type="submit" value="Видалити">
+</form>
+{delete_info}
+<p>
+<i><a href="/">Повернутись на головну</a></i>
+</p>
+</body>
+</html>
