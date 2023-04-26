@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Сторінка пасажира</title>
+  </head>
+  <body>
+  <h1>Додати пасажира</h1>
+  <form method="POST" action="/add_passenger">
+    <p>
+      <input type="text" name="last_name" placeholder="Введіть прізвище">
+      <input type="text" name="name" placeholder="Введіть ім'я">
+      <input type="text" name="middle_name" placeholder="Введіть по батькові">
+      <input type="submit" value="Додати">
+    </p>
+  </form>
+  {passenger_info}
+  <p>
+    <i><a href="/">Повернутись на головну</a></i>
+  </p>
+  </body>
+</html>
