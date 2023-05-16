@@ -17,9 +17,6 @@ def application(environ, start_response):
         elif string1 == string2:
             answer = "слова в першому і в другому полі однакові"
             result = "<h1>{}</h1>".format(answer)
-        elif string1 != string2:
-            answer = "слова в першому і в другому полі різні"
-            result = "<h1>{}</h1>".format(answer)
         else:
             if difference(string1, string2):
                 answer = "знайдене слово"
